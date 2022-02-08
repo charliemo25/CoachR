@@ -13,7 +13,12 @@ import { useQuasar } from "quasar";
 
 export default {
   name: "Profil",
-  props:['user'],
+
+  data() {
+    return {
+      user: null,
+    };
+  },
   setup() {
     const $q = useQuasar();
 

@@ -3,10 +3,10 @@
     <q-toolbar class="bg-black">
       <!-- <q-btn flat @click="drawer = !drawer" round dense icon="menu" /> -->
       <q-toolbar-title to="/"> CoacheR</q-toolbar-title>
-      <Signup v-if="!user"/>
-      <Login v-if="!user"/>
-      <Profil v-if="user" :user="user" />
-      <Logout v-if="user" :user="user" /> 
+      <Signup v-if="!user" />
+      <Login v-if="!user" />
+      <Profil v-if="user" />
+      <Logout v-if="user" />
       <q-separator inset spaced />
       <q-btn
         v-if="dark.isActive"
@@ -36,6 +36,18 @@ import Profil from "../dialog/profil.vue";
 
 export default {
   name: "Header",
+  props: ["user"],
+  setup() {
+    const $q = useQuasar();
+    return {
+      leftDrawerOpen: ref(false),
+      dark: $q.dark,
+      drawer: ref(false),
+      miniState: ref(true),
+      modifyModal: ref(false),
+      isPwd: ref(true),
+    };
+  },
   methods: {
     openLogin() {
       this.modifyModal = true;
@@ -53,31 +65,6 @@ export default {
     Signup,
     Logout,
     Profil,
-  },
-  data(){
-    return {
-      user: null
-    }
-  },
-  setup() {
-    const $q = useQuasar();
-    return {
-      leftDrawerOpen: ref(false),
-      dark: $q.dark,
-      drawer: ref(false),
-      miniState: ref(true),
-      modifyModal: ref(false),
-      isPwd: ref(true),
-    };
-  }, 
- mounted() {
-    if (localStorage.getItem("user")) {
-      try {
-        this.user = localStorage.getItem("user");
-      } catch (e) {
-        localStorage.removeItem("user");
-      }
-    }
   },
 };
 </script>

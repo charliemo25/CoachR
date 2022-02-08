@@ -4,12 +4,14 @@ module.exports = {
       importStrategy: "kebab",
       rtlSupport: false,
     },
+    cordovaPath: "src-cordova",
   },
+
   transpileDependencies: ["quasar"],
+
   devServer: {
-    // API connection
-    // proxy: "http://localhost:5000", 
-    port: 8888
+    proxy: "http://localhost:8000",
   },
-  // publicPath: "./public",
+
+  publicPath: "",
 };

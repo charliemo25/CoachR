@@ -14,7 +14,11 @@ import { useQuasar } from "quasar";
 
 export default {
   name: "Logout",
-  props:['user'],
+  data() {
+    return {
+      user: null,
+    };
+  },
   setup() {
     const $q = useQuasar();
 
@@ -33,9 +37,8 @@ export default {
   methods: {
     logout() {
       console.log(localStorage);
-      localStorage.removeItem('user');
+      localStorage.user = null;
       this.showNotif("Déconnecté !", "green", "bottom-right");
-      this.$router.push('/')
     },
   },
   // persist() {
