@@ -1,7 +1,7 @@
 <template>
   <q-layout view="hHh Lpr lff">
-    <Header />
-    <Drawer />
+    <Header :user="user"/>
+    <Drawer :user="user"/>
 
     <q-page-container>
       <router-view />
@@ -28,6 +28,11 @@ export default {
       window.scrollTo(0, 0);
     },
   },
+  data(){
+    return {
+      user: null
+    }
+  },
   setup() {
     return {
       thumbStyle: {
@@ -47,5 +52,15 @@ export default {
       },
     };
   },
+  mounted() {
+    if (localStorage.getItem("user")) {
+      try {
+        this.user = localStorage.getItem("user");
+      } catch (e) {
+        localStorage.removeItem("user");
+      }
+    }
+  },
+  
 };
 </script>

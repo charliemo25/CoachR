@@ -3,10 +3,10 @@
     <q-toolbar class="bg-black">
       <!-- <q-btn flat @click="drawer = !drawer" round dense icon="menu" /> -->
       <q-toolbar-title to="/"> CoacheR</q-toolbar-title>
-      <Signup />
-      <Login />
-      <!-- <Profil v-if="user !== 'null'" />
-      <Logout v-if="user !== 'null'" /> -->
+      <Signup v-if="!user"/>
+      <Login v-if="!user"/>
+      <Profil v-if="user" :user="user" />
+      <Logout v-if="user" :user="user" /> 
       <q-separator inset spaced />
       <q-btn
         v-if="dark.isActive"
@@ -31,27 +31,11 @@ import { useQuasar } from "quasar";
 import { ref } from "vue";
 import Login from "../dialog/login.vue";
 import Signup from "../dialog/signup.vue";
-// import Logout from "../dialog/logout.vue";
-// import Profil from "../dialog/profil.vue";
+import Logout from "../dialog/logout.vue";
+import Profil from "../dialog/profil.vue";
 
 export default {
   name: "Header",
-  data() {
-    return {
-      user: null,
-    };
-  },
-  setup() {
-    const $q = useQuasar();
-    return {
-      leftDrawerOpen: ref(false),
-      dark: $q.dark,
-      drawer: ref(false),
-      miniState: ref(true),
-      modifyModal: ref(false),
-      isPwd: ref(true),
-    };
-  },
   methods: {
     openLogin() {
       this.modifyModal = true;
@@ -67,13 +51,29 @@ export default {
   components: {
     Login,
     Signup,
-    // Logout,
-    // Profil,
+    Logout,
+    Profil,
   },
-  mounted() {
+  data(){
+    return {
+      user: null
+    }
+  },
+  setup() {
+    const $q = useQuasar();
+    return {
+      leftDrawerOpen: ref(false),
+      dark: $q.dark,
+      drawer: ref(false),
+      miniState: ref(true),
+      modifyModal: ref(false),
+      isPwd: ref(true),
+    };
+  }, 
+ mounted() {
     if (localStorage.getItem("user")) {
       try {
-        this.user = JSON.parse(localStorage.getItem("user"));
+        this.user = localStorage.getItem("user");
       } catch (e) {
         localStorage.removeItem("user");
       }

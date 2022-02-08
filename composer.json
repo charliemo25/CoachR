@@ -1,6 +1,0 @@
-{
-    "require": {
-        "symfony/validator": "^6.0",
-        "symfony/serializer-pack": "^1.1"
-    }
-}

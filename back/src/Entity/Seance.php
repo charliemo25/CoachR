@@ -4,8 +4,11 @@ namespace App\Entity;
 
 use App\Repository\SeanceRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use App\Validator as SeanceDateAssert;
 
 #[ORM\Entity(repositoryClass: SeanceRepository::class)]
+#[SeanceDateAssert\SeanceDate()]
 class Seance
 {
     #[ORM\Id]
@@ -14,9 +17,11 @@ class Seance
     private $id;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
+    #[Assert\DateTime()]
     private $begin;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
+    #[Assert\DateTime()]
     private $end;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'seances')]
