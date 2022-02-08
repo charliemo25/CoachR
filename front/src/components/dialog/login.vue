@@ -62,18 +62,6 @@ import { useQuasar } from "quasar";
 
 export default {
   name: "Login",
-  methods: {
-    openLogin() {
-      this.modifyModal = true;
-    },
-    login() {
-      localStorage.setItem("user", JSON.stringify(this.user));
-      this.modifyModal = false;
-      this.showNotif("Connecté !", "green", "bottom-right");
-      this.$router.push('logged')
-      console.log(JSON.parse(localStorage.getItem("user")));
-    },
-  },
   data() {
     return {
       user: {
@@ -97,5 +85,37 @@ export default {
       },
     };
   },
+  methods: {
+    openLogin() {
+      this.modifyModal = true;
+    },
+    login() {
+      localStorage.setItem("user", JSON.stringify(this.user));
+      this.modifyModal = false;
+      this.showNotif("Connecté !", "green", "bottom-right");
+      console.log(JSON.parse(localStorage.getItem("user")));
+    },
+    getConfig(method, body) {
+      if (body) {
+        return {
+          headers: { "Content-Type": "application/json" },
+          method: method,
+          mode: "cors",
+          cache: "default",
+          body: JSON.stringify(body),
+        };
+      } else {
+        return {
+          method: method,
+          mode: "cors",
+          cache: "default",
+        };
+      }
+    },
+  },
+  // persist() {
+
+  //   console.log("logged");
+  // },
 };
 </script>

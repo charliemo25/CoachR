@@ -1,7 +1,7 @@
 <template>
   <q-layout view="hHh Lpr lff">
-    <Header :user="user"/>
-    <Drawer :user="user"/>
+    <Header :user="user" />
+    <Drawer :user="user" />
 
     <q-page-container>
       <router-view />
@@ -22,17 +22,12 @@ import Drawer from "./components/templates/drawer";
 
 export default {
   name: "App",
-  components: { Header, Drawer },
-  methods: {
-    GoToTop() {
-      window.scrollTo(0, 0);
-    },
-  },
-  data(){
+  data() {
     return {
-      user: null
-    }
+      user: JSON.parse(localStorage.getItem("user")),
+    };
   },
+  components: { Header, Drawer },
   setup() {
     return {
       thumbStyle: {
@@ -53,14 +48,7 @@ export default {
     };
   },
   mounted() {
-    if (localStorage.getItem("user")) {
-      try {
-        this.user = localStorage.getItem("user");
-      } catch (e) {
-        localStorage.removeItem("user");
-      }
-    }
+    console.log(this.user);
   },
-  
 };
 </script>

@@ -78,11 +78,33 @@ export default {
     };
   },
   methods: {
+    getConfig(method, body) {
+      if (body) {
+        return {
+          headers: { "Content-Type": "application/json" },
+          method: method,
+          mode: "cors",
+          cache: "default",
+          body: JSON.stringify(body),
+        };
+      } else {
+        return {
+          method: method,
+          mode: "cors",
+          cache: "default",
+        };
+      }
+    },
     openSignup() {
       this.modifyModal = true;
     },
-    signup() {
-      console.log("logged");
+    async signup() {
+      const request = new Request(
+        "/api/user",
+        this.getConfig("POST", this.list)
+      );
+      const result = await fetch(request);
+      console.log(result);
     },
   },
 };
