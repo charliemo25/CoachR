@@ -4,19 +4,33 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
+use ApiPlatform\Core\Annotation\ApiFilter;
 use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
+#[ApiResource]
+#[ApiFilter(
+    SearchFilter::class,
+    properties:[
+        "experience" => "exact",
+        "availability" => "exact",
+        "roles"
+    ]
+)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(['show_user'])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 180, unique: true)]
@@ -24,9 +38,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Email(
         mode:'html5'
     )]
+    #[Groups(['show_user'])]
     private $email;
 
     #[ORM\Column(type: 'json')]
+    #[Groups(['show_user'])]
     private $roles = [];
 
     #[ORM\Column(type: 'string')]
@@ -34,13 +50,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Length(
         min:8,
         minMessage: "Le mot de passe doit faire 8 caractères au minimum"
-    )]
+        )]
+    #[Groups(['show_user'])]
     private $password;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(['show_user'])]
     private $availability;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(['show_user'])]
     private $experience;
 
     #[ORM\OneToMany(mappedBy: 'member', targetEntity: Seance::class)]

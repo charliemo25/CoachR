@@ -2,13 +2,17 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\SeanceRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Validator as SeanceDateAssert;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 #[ORM\Entity(repositoryClass: SeanceRepository::class)]
 #[SeanceDateAssert\SeanceDate()]
+#[ApiResource()]
 class Seance
 {
     #[ORM\Id]

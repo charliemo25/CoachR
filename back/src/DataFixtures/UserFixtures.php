@@ -17,9 +17,10 @@ class UserFixtures extends Fixture
         $experiences = ['débutant', 'intermediaire', 'expert'];
 
         for ($i = 0; $i < 20; $i++) {
+            $data = $faker->email();
             $user = new User();
-            $user->setEmail($faker->email())
-                ->setPassword($faker->password())
+            $user->setEmail($data)
+                ->setPassword($data)
                 ->setRoles($roles[rand(0,1)])
                 ->setAvailability($available[rand(0,2)])
                 ->setExperience($experiences[rand(0,2)]);

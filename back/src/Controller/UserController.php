@@ -37,7 +37,7 @@ class UserController extends AbstractController
     #[Route('/users', name:'get_users', methods:['GET'])]
     public function getUsers(): Response
     {
-        return $this->json($this->userRepository->findAll(), 200);
+        return $this->json($this->userRepository->findAll(), 200, [], ["groups" => "show_user"]);
     }
 
     #[Route('/users', name:'create_user', methods:['POST'])]
@@ -56,7 +56,7 @@ class UserController extends AbstractController
             $this->em->persist($user);
             $this->em->flush();
 
-            return $this->json(["message" => "L'utilisateur à été créer", "User" => $user], 200);
+            return $this->json(["message" => "L'utilisateur à été créé", "User" => $user], 200);
         } catch (\Throwable $th) {
 
             return $this->json([
@@ -65,7 +65,6 @@ class UserController extends AbstractController
             ], 400);
 
         }
-        
     }
 
     #[Route('/users/{id<\d+>}', name:'edit_user', methods:['PUT'])]
@@ -95,7 +94,6 @@ class UserController extends AbstractController
             ], 400);
 
         }
-
     }
 
 }
